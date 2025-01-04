@@ -1,10 +1,19 @@
 import { Router } from 'express'
+import { validatorMiddleware } from '../../middlewares'
 import { controllerWrapper } from '../../utils'
-import { ICreateUser } from './interfaces'
-import { userCreateController, userGetListController } from './user.controller'
+import {
+  CreateUserType,
+  userCreateController,
+  userCreateSchema,
+  userGetListController
+} from './controllers'
 
 export const userRouter = Router()
 
-userRouter.post('/', controllerWrapper<ICreateUser>(userCreateController))
+userRouter.post(
+  '/',
+  validatorMiddleware(userCreateSchema),
+  controllerWrapper<CreateUserType>(userCreateController)
+)
 
 userRouter.get('/list', controllerWrapper(userGetListController))

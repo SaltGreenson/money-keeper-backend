@@ -1,8 +1,8 @@
 import { ConflictException } from '../../../utils'
+import { CreateUserType } from '../controllers'
 import { User } from '../core'
-import { ICreateUser } from '../interfaces'
 
-export const userCreate = async (data: ICreateUser) => {
+export const userCreate = async (data: CreateUserType) => {
   try {
     return await new User(data).save()
   } catch (err) {
