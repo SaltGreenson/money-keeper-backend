@@ -3,7 +3,7 @@ const messageBuilder = (message: string, statusCode: number, additionalData: obj
 }
 
 export class InternalServerError extends Error {
-  constructor(message: string, additionalData?: object) {
+  constructor(message: string = 'Internal Server Error', additionalData?: object) {
     super(messageBuilder(message, 500, additionalData))
     this.name = InternalServerError.name
   }

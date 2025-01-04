@@ -6,6 +6,7 @@ export interface IRouter<B = BasicType, P = BasicType, Q = BasicType> {
   body: B
   params: P
   query: Q
+  headers: Pick<Request, 'headers'>
 }
 
 export function controllerWrapper<B = BasicType, P = BasicType, Q = BasicType, S = unknown>(
@@ -16,8 +17,9 @@ export function controllerWrapper<B = BasicType, P = BasicType, Q = BasicType, S
       const result = await method({
         body: req.body,
         params: req.params,
-        query: req.query
-      } as IRouter<B, P, Q>)
+        query: req.query,
+        headers: req.headers
+      } as unknown as IRouter<B, P, Q>)
 
       res.json(result ?? { statusCode: 200 })
     } catch (err) {

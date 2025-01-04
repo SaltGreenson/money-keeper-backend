@@ -17,10 +17,26 @@ const buildError = (error: ZodError) => {
   }, {})
 }
 
-export function validatorMiddleware(schema: z.ZodObject<any, any>) {
+const sliceObject = (body: Record<string, unknown>, schema: z.ZodObject<any, any>) => {
+  const keys = schema._getCached().keys
+
+  return keys.reduce((acc: Record<string, unknown>, curr) => {
+    acc[curr] = body[curr]
+
+    return acc
+  }, {})
+}
+
+export function validatorMiddleware(
+  schema: z.ZodObject<any, any>,
+  validate: 'body' | 'query' | 'params' = 'body'
+) {
   return (req: Request, res: Response, next: NextFunction) => {
     try {
-      schema.parse(req.body)
+      schema.parse(req[validate])
+
+      req[validate] = sliceObject(req[validate], schema)
+
       next()
     } catch (error) {
       if (!(error instanceof ZodError)) {

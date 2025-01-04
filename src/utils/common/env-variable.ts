@@ -5,7 +5,8 @@ type ConfigOption = { type: 'number' | 'boolean' | 'string' | 'object' }
 
 const Config: Record<string, ConfigOption> = {
   PORT: { type: 'number' },
-  MONGO_DB_URL: { type: 'string' }
+  MONGO_DB_URL: { type: 'string' },
+  JWT_SECRET: { type: 'string' }
 }
 
 type Options = {
@@ -22,7 +23,7 @@ const transform = (
     return null
   }
 
-  const message = `Invalid value for ${variable}. Expected: ${type}, recieved: ${envVariable}`
+  const message = `Invalid value for ${variable}. Expected: ${type}, recieved: ${envVariable}.`
 
   if (type === 'number') {
     const numeric = Number(envVariable)
