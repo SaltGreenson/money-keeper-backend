@@ -5,7 +5,8 @@ import {
   CreateUserType,
   userCreateController,
   userCreateSchema,
-  userGetListController
+  userGetListController,
+  userMeController
 } from './controllers'
 
 export const userRouter = Router()
@@ -17,3 +18,4 @@ userRouter.post(
 )
 
 userRouter.get('/list', controllerWrapper(userGetListController))
+userRouter.get('/me', controllerWrapper(userMeController))

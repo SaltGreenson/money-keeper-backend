@@ -10,7 +10,7 @@ export class InternalServerError extends Error {
 }
 
 export class ForbiddenException extends Error {
-  constructor(message: string, additionalData?: object) {
+  constructor(message: string = 'Forbidden resource', additionalData?: object) {
     super(messageBuilder(message, 403, additionalData))
     this.name = ForbiddenException.name
   }
@@ -24,7 +24,7 @@ export class ConflictException extends Error {
 }
 
 export class UnauthorizedException extends Error {
-  constructor(message: string, additionalData?: object) {
+  constructor(message: string = 'Unathorized', additionalData?: object) {
     super(messageBuilder(message, 401, additionalData))
     this.name = UnauthorizedException.name
   }

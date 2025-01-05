@@ -6,7 +6,9 @@ type ConfigOption = { type: 'number' | 'boolean' | 'string' | 'object' }
 const Config: Record<string, ConfigOption> = {
   PORT: { type: 'number' },
   MONGO_DB_URL: { type: 'string' },
-  JWT_SECRET: { type: 'string' }
+  JWT_SECRET: { type: 'string' },
+  COOKIE_SECRET: { type: 'string' },
+  COOKIE_NAME: { type: 'string' }
 }
 
 type Options = {

@@ -7,11 +7,19 @@ export enum UserStatus {
   BLOCKED = 'BLOCKED'
 }
 
+export enum UserRole {
+  ADMIN = 'ADMIN',
+  MANAGER = 'MANAGER',
+  USER = 'USER'
+}
+
 export interface IUser {
+  _id: string
   name: string
   email: string
   status: UserStatus
   password: string
+  roles: UserRole[]
 }
 
 const userSchema = new Schema<IUser>(
@@ -19,7 +27,8 @@ const userSchema = new Schema<IUser>(
     name: { type: String },
     email: { type: String, required: true, unique: true },
     status: { type: String, enum: UserStatus, default: UserStatus.DRAFT },
-    password: { type: String }
+    password: { type: String },
+    roles: { type: [String], default: [UserRole.USER] }
   },
   { timestamps: true }
 )

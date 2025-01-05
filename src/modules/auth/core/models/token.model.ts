@@ -1,8 +1,9 @@
 import { model, Schema } from 'mongoose'
+import { IUser } from '../../../user/core'
 
 export interface IToken {
   token: string
-  userId: Schema.Types.ObjectId
+  userId: Schema.Types.ObjectId | IUser
   device: string
   userId_device: string
 }

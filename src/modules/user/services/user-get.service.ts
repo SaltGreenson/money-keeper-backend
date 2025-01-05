@@ -2,7 +2,7 @@ import { BadRequestException } from '../../../utils'
 import { User } from '../core'
 
 export const userFindById = async (id: string) => {
-  return User.findById(id)
+  return (await User.findById(id))?.toJSON()
 }
 
 export const userFindByIdWithThrow = async (id: string) => {
@@ -16,7 +16,17 @@ export const userFindByIdWithThrow = async (id: string) => {
 }
 
 export const userFindByEmail = async (email: string) => {
-  return User.findOne({ email })
+  return (await User.findOne({ email }))?.toJSON()
+}
+
+export const userFindByEmailWithThrow = async (email: string) => {
+  const candidate = await userFindByEmail(email)
+
+  if (!candidate) {
+    throw new BadRequestException('Invalid email or password')
+  }
+
+  return candidate
 }
 
 export const userFindMany = async () => {

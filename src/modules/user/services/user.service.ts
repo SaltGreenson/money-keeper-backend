@@ -9,13 +9,13 @@ export const userCreate = async ({ password, ...data }: CreateUserType) => {
     const status = password ? UserStatus.ACTIVE : UserStatus.DRAFT
     data.name = data.name ? data.name : data.email.split('@')[0]
 
-    const create = await new User({ ...data, status }).save()
+    const created = await new User({ ...data, status }).save()
 
     if (password) {
-      await userSavePassword(String(create._id), password)
+      await userSavePassword(String(created._id), password)
     }
 
-    return create.toJSON()
+    return created.toJSON()
   } catch (err) {
     if (isConflictException(err)) {
       throw new ConflictException('User already exists')

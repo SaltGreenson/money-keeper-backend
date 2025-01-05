@@ -1,3 +1,2 @@
-export * from './services/user-get.service'
-export * from './services/user.service'
+export * from './services'
 export * from './user.router'
