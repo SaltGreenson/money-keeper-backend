@@ -1,5 +1,5 @@
 import jwt from 'jsonwebtoken'
-import { isConflictException } from '../../../helpers'
+import { isConflictMongoException } from '../../../helpers'
 import {
   BadRequestException,
   envVariable,
@@ -22,7 +22,7 @@ export const saveToken = async (userId: string, userAgent: string) => {
   try {
     return (await Token.create({ device, userId, token })).toJSON()
   } catch (err) {
-    if (isConflictException(err)) {
+    if (isConflictMongoException(err)) {
       const tokenData = (await Token.findOne({ device, userId }))?.toJSON()
 
       if (tokenData) {

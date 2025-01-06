@@ -1,6 +1,6 @@
 import { userFindMany } from '../services'
 
-export const userGetListController = async () => {
+export const userFindManyController = async () => {
   const result = await userFindMany()
   return { payload: result }
 }

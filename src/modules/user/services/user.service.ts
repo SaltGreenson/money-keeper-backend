@@ -1,10 +1,10 @@
-import { isConflictException } from '../../../helpers'
+import { isConflictMongoException } from '../../../helpers'
 import { BadRequestException, ConflictException, InternalServerError } from '../../../utils'
-import { CreateUserType } from '../controllers'
+import { UserCreateType } from '../controllers'
 import { User, UserStatus } from '../core'
 import { userSavePassword } from './user-password.service'
 
-export const userCreate = async ({ password, ...data }: CreateUserType) => {
+export const userCreate = async ({ password, ...data }: UserCreateType) => {
   try {
     const status = password ? UserStatus.ACTIVE : UserStatus.DRAFT
     data.name = data.name ? data.name : data.email.split('@')[0]
@@ -17,7 +17,7 @@ export const userCreate = async ({ password, ...data }: CreateUserType) => {
 
     return created.toJSON()
   } catch (err) {
-    if (isConflictException(err)) {
+    if (isConflictMongoException(err)) {
       throw new ConflictException('User already exists')
     }
 

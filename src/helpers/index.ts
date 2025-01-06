@@ -1,1 +1,1 @@
-export * from './is-conflict-exception.helper'
+export * from './is-conflict-mongo-exception.helper'

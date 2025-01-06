@@ -8,9 +8,9 @@ export const userCreateSchema = z.object({
   password: z.string().min(8).max(20).optional()
 })
 
-export type CreateUserType = z.infer<typeof userCreateSchema>
+export type UserCreateType = z.infer<typeof userCreateSchema>
 
-export const userCreateController = async ({ body }: IRouter<CreateUserType>) => {
+export const userCreateController = async ({ body }: IRouter<UserCreateType>) => {
   const result = await userCreate(body)
 
   return { id: result._id }
