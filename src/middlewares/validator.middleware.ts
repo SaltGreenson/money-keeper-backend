@@ -27,13 +27,14 @@ const sliceObject = (body: Record<string, unknown>, schema: z.ZodObject<any, any
   }, {})
 }
 
-export function validatorMiddleware(
+export function validatorMiddleware<T = unknown>(
   schema: z.ZodObject<any, any>,
-  validate: 'body' | 'query' | 'params' = 'body'
+  validate: 'body' | 'query' | 'params' = 'body',
+  transform: (value: T) => T = (value) => value
 ) {
   return (req: Request, res: Response, next: NextFunction) => {
     try {
-      schema.parse(req[validate])
+      schema.parse(transform(req[validate]))
 
       req[validate] = sliceObject(req[validate], schema)
 

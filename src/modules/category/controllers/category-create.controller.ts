@@ -1,6 +1,7 @@
 import { z } from 'zod'
 import { IRouter } from '../../../utils/common/controller-wrapper'
-import { CategoryType, OperationType } from '../core'
+import { OperationType } from '../../operation'
+import { CategoryType } from '../core'
 import { categoryCreate } from '../services'
 
 export const categoryCreateSchema = z.object({

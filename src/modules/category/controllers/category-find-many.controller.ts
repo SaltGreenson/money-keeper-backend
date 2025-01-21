@@ -1,6 +1,6 @@
 import { z } from 'zod'
 import { IRouter } from '../../../utils/common/controller-wrapper'
-import { OperationType } from '../core'
+import { OperationType } from '../../operation'
 import { categoryFindMany } from '../services'
 
 export const categoryFindManyShema = z.object({

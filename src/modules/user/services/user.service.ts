@@ -1,5 +1,6 @@
 import { isConflictMongoException } from '../../../helpers'
 import { BadRequestException, ConflictException, InternalServerError } from '../../../utils'
+import { cashAccountCreate } from '../../cash-account'
 import { UserCreateType } from '../controllers'
 import { User, UserStatus } from '../core'
 import { userSavePassword } from './user-password.service'
@@ -14,6 +15,8 @@ export const userCreate = async ({ password, ...data }: UserCreateType) => {
     if (password) {
       await userSavePassword(String(created._id), password)
     }
+
+    await cashAccountCreate({ name: 'Основной' }, created)
 
     return created.toJSON()
   } catch (err) {

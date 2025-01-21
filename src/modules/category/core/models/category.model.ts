@@ -1,13 +1,9 @@
 import { model, Schema } from 'mongoose'
+import { OperationType } from '../../../operation'
 
 export enum CategoryType {
   GENERAL = 'PUBLIC',
   PRIVATE = 'PRIVATE'
-}
-
-export enum OperationType {
-  INCOME = 'INCOME',
-  EXPENSES = 'EXPENSES'
 }
 
 export interface ICategory {
@@ -32,7 +28,7 @@ const categorySchema = new Schema<ICategory>(
     type: { type: String, enum: CategoryType, default: CategoryType.PRIVATE },
     operationType: { type: String, enum: OperationType, required: true },
     parentId: { type: Schema.Types.ObjectId, ref: 'Category', default: null },
-    userId: { type: Schema.Types.ObjectId, required: true, ref: 'User', default: null },
+    userId: { type: Schema.Types.ObjectId, required: true, ref: 'User' },
     userId_name: { type: String, uniq: true },
     depth: { type: Number, default: 0 },
     width: { type: Number, default: 0 },

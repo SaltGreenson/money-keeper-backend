@@ -4,10 +4,14 @@ import express, { Application, Request, Response } from 'express'
 import morgan from 'morgan'
 import { errorMiddleware } from './middlewares'
 import { authMiddleware } from './middlewares/auth.middleware'
-import { userRouter } from './modules'
-import { authRouter } from './modules/auth/auth.router'
-import { categoryRouter } from './modules/category'
-import { connectDatabase, envVariable } from './utils'
+import {
+  authRouter,
+  cashAccountRouter,
+  categoryRouter,
+  regularOperationRouter,
+  userRouter
+} from './modules'
+import { envVariable, onApplicationBootstrap } from './utils'
 
 const app: Application = express()
 
@@ -22,6 +26,8 @@ app.use(cookieParser(envVariable('COOKIE_SECRET', { isRequired: true })))
 
 app.use('/users', authMiddleware, userRouter)
 app.use('/category', authMiddleware, categoryRouter)
+app.use('/regular-operation', authMiddleware, regularOperationRouter)
+app.use('/cash-account', authMiddleware, cashAccountRouter)
 app.use('/auth', authRouter)
 
 const PORT = envVariable<number>('PORT', { isRequired: true })
@@ -32,7 +38,7 @@ app.get('/', (req: Request, res: Response) => {
 
 app.use(errorMiddleware)
 ;(async function bootstrap() {
-  await connectDatabase()
+  await onApplicationBootstrap()
 
   app.listen(PORT, () => {
     console.log(`Server is running at ${PORT}`)
