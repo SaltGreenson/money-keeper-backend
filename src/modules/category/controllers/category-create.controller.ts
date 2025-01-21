@@ -7,7 +7,9 @@ export const categoryCreateSchema = z.object({
   name: z.string().min(3).max(100),
   type: z.enum([...Object.values(CategoryType)] as [string, ...string[]]).optional(),
   operationType: z.enum([...Object.values(OperationType)] as [string, ...string[]]),
-  parentId: z.string().optional()
+  depth: z.number().optional(),
+  parentId: z.string().optional(),
+  hasChild: z.boolean().optional()
 })
 
 export type CategoryCreateType = z.infer<typeof categoryCreateSchema>
