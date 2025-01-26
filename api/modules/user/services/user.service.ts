@@ -3,8 +3,8 @@ import { BadRequestException, ConflictException, InternalServerError } from '../
 import { cashAccountCreate } from '../../cash-account'
 import { categoryCreate } from '../../category'
 import { OperationType } from '../../operation'
+import { UserCreateType } from '../controllers/user-create.controller'
 import { IUser, User, UserStatus } from '../core'
-import { UserCreateType } from './../controllers/user-create.controller'
 import { userSavePassword } from './user-password.service'
 
 const getUserName = ({ email, name }: Pick<UserCreateType, 'name' | 'email'>) => {

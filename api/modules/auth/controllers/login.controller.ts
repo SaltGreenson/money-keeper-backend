@@ -1,8 +1,8 @@
 import { Response } from 'express'
 import { z } from 'zod'
 import { envVariable, ForbiddenException } from '../../../utils'
+import { IRouter } from '../../../utils/common/controller-wrapper'
 import { login } from '../services/auth.service'
-import { IRouter } from './../../../utils/common/controller-wrapper'
 
 export const loginSchema = z.object({
   email: z.string().email(),

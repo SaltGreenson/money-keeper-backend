@@ -1,7 +1,7 @@
 import { ForbiddenException } from '../../../utils'
 import { userComparePassword, userCreate, userFindByEmail } from '../../user'
 import { UserStatus } from '../../user/core'
-import { LoginType } from './../controllers/login.controller'
+import { LoginType } from '../controllers/login.controller'
 import { saveToken } from './token.service'
 
 export const login = async (userAgent: string, { email, password }: LoginType) => {

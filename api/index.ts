@@ -25,17 +25,17 @@ app.use(bodyParser.json({ limit: '6mb' }))
 app.use(bodyParser.urlencoded({ limit: '6mb', extended: true }))
 app.use(cookieParser(envVariable('COOKIE_SECRET', { isRequired: true })))
 
-app.use('/users', authMiddleware, userRouter)
-app.use('/category', authMiddleware, categoryRouter)
-app.use('/regular-operation', authMiddleware, operationRouter)
-app.use('/cash-account', authMiddleware, cashAccountRouter)
-app.use('/operation', authMiddleware, operationRouter)
-app.use('/dashboard', authMiddleware, dashboardRouter)
-app.use('/auth', authRouter)
+app.use('/api/users', authMiddleware, userRouter)
+app.use('/api/category', authMiddleware, categoryRouter)
+app.use('/api/regular-operation', authMiddleware, operationRouter)
+app.use('/api/cash-account', authMiddleware, cashAccountRouter)
+app.use('/api/operation', authMiddleware, operationRouter)
+app.use('/api/dashboard', authMiddleware, dashboardRouter)
+app.use('/api/auth', authRouter)
 
 const PORT = envVariable<number>('PORT', { isRequired: true })
 
-app.get('/', (req: Request, res: Response) => {
+app.get('/api', (req: Request, res: Response) => {
   res.send('Express on Vercel')
 })
 
