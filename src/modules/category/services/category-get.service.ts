@@ -1,11 +1,11 @@
 import { BadRequestException } from '../../../utils'
 import { IUser } from '../../user/core'
 import { CategoryFindManyType } from '../controllers'
-import { Category, CategoryType } from '../core'
+import { Category } from '../core'
 
 export const categoryFindMany = async (data: CategoryFindManyType, user: IUser) => {
   const filter: Record<string, unknown> = {
-    $or: [{ type: CategoryType.GENERAL }, { userId: user._id }],
+    userId: user._id,
     parentId: null
   }
 

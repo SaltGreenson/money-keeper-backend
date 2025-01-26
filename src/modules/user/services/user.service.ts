@@ -1,22 +1,36 @@
 import { isConflictMongoException } from '../../../helpers'
 import { BadRequestException, ConflictException, InternalServerError } from '../../../utils'
 import { cashAccountCreate } from '../../cash-account'
-import { UserCreateType } from '../controllers'
-import { User, UserStatus } from '../core'
+import { categoryCreate } from '../../category'
+import { OperationType } from '../../operation'
+import { IUser, User, UserStatus } from '../core'
+import { UserCreateType } from './../controllers/user-create.controller'
 import { userSavePassword } from './user-password.service'
+
+const getUserName = ({ email, name }: Pick<UserCreateType, 'name' | 'email'>) => {
+  return name ? name : email.split('@')[0]
+}
+
+const userPostcreate = async (user: IUser, password?: string) => {
+  const promises: Promise<unknown>[] = [
+    cashAccountCreate({ name: 'Основной' }, user),
+    categoryCreate({ name: 'Прочее', operationType: OperationType.EXPENSES }, user)
+  ]
+
+  if (password) {
+    promises.push(userSavePassword(String(user._id), password))
+  }
+
+  await Promise.all(promises)
+}
 
 export const userCreate = async ({ password, ...data }: UserCreateType) => {
   try {
     const status = password ? UserStatus.ACTIVE : UserStatus.DRAFT
-    data.name = data.name ? data.name : data.email.split('@')[0]
 
-    const created = await new User({ ...data, status }).save()
+    const created = await new User({ ...data, name: getUserName(data), status }).save()
 
-    if (password) {
-      await userSavePassword(String(created._id), password)
-    }
-
-    await cashAccountCreate({ name: 'Основной' }, created)
+    await userPostcreate(created, password)
 
     return created.toJSON()
   } catch (err) {

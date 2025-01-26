@@ -8,9 +8,10 @@ import {
   authRouter,
   cashAccountRouter,
   categoryRouter,
-  regularOperationRouter,
+  operationRouter,
   userRouter
 } from './modules'
+import { dashboardRouter } from './modules/dashboard'
 import { envVariable, onApplicationBootstrap } from './utils'
 
 const app: Application = express()
@@ -26,8 +27,10 @@ app.use(cookieParser(envVariable('COOKIE_SECRET', { isRequired: true })))
 
 app.use('/users', authMiddleware, userRouter)
 app.use('/category', authMiddleware, categoryRouter)
-app.use('/regular-operation', authMiddleware, regularOperationRouter)
+app.use('/regular-operation', authMiddleware, operationRouter)
 app.use('/cash-account', authMiddleware, cashAccountRouter)
+app.use('/operation', authMiddleware, operationRouter)
+app.use('/dashboard', authMiddleware, dashboardRouter)
 app.use('/auth', authRouter)
 
 const PORT = envVariable<number>('PORT', { isRequired: true })
