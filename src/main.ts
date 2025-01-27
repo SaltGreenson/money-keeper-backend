@@ -36,7 +36,7 @@ app.use('/auth', authRouter)
 const PORT = envVariable<number>('PORT', { isRequired: true })
 
 app.get('/', (req: Request, res: Response) => {
-  res.send('Express on Vercel')
+  res.send('Healthcheck')
 })
 
 app.use(errorMiddleware)
