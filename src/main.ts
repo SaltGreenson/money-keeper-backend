@@ -5,6 +5,7 @@ import morgan from 'morgan'
 import { errorMiddleware } from './middlewares'
 import { authMiddleware } from './middlewares/auth.middleware'
 import {
+  authAuthenticatedRouter,
   authRouter,
   cashAccountRouter,
   categoryRouter,
@@ -31,6 +32,7 @@ app.use('/regular-operation', authMiddleware, operationRouter)
 app.use('/cash-account', authMiddleware, cashAccountRouter)
 app.use('/operation', authMiddleware, operationRouter)
 app.use('/dashboard', authMiddleware, dashboardRouter)
+app.use('/auth/guarded/', authMiddleware, authAuthenticatedRouter)
 app.use('/auth', authRouter)
 
 const PORT = envVariable<number>('PORT', { isRequired: true })

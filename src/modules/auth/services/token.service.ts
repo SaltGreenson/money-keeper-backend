@@ -84,7 +84,5 @@ export const getToken = async (userId: string, userAgent: string) => {
 }
 
 export const getCurrentlyLogged = async (userId: string) => {
-  const payload = await Token.find({ userId })
-
-  return { payload }
+  return Token.find({ userId }).select('_id device createdAt').sort({ createdAt: 1 })
 }

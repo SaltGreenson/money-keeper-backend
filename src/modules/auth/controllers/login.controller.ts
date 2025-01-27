@@ -27,5 +27,5 @@ export const loginController = async (
 
   res.cookie(cookieName, token)
 
-  return { statusCode: 200 }
+  return { statusCode: 200, token }
 }
